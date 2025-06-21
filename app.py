@@ -1,8 +1,10 @@
 from flask import Flask, request, render_template
 import numpy as np
-import pandas as pd  # ✅ Add this line
+import pandas as pd
 import pickle
 import sklearn
+import os
+
 print("Scikit-learn version:", sklearn.__version__)
 
 # Load model and preprocessor
@@ -45,5 +47,7 @@ def predict():
 
         return render_template('index.html', prediction=round(prediction, 2))
 
+# ✅ Only one app.run, works both locally and on Render
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
