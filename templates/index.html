@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Empowering Agriculture with Smart Yield Predictions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    /* Background image full page */
+    .bg-image {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 0.6; /* Optional: control how visible the background is */
+    }
+
+    .bg-dark-light {
+      background-color: rgba(5, 50, 1, 0.5);
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .form-control-dark {
+      background-color: #333;
+      border: 1px solid #666;
+      
+      color: white;
+    }
+.bg-dark-light {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 100, 0, 0.7);
+}
+
+.btn-box {
+  display: inline-block;
+  padding: 12px 28px;
+  background: rgb(173, 18, 18);
+  border-radius: 40px;
+  font-size: 18px;
+  color: white;
+  letter-spacing: 1px;
+  text-decoration: none;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+  
+  opacity: 0;
+  animation: slideTop 1s ease forwards;
+  animation-delay: 1s;
+}
+
+@keyframes slideTop {
+  0% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+
+
+    body {
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+    <img src="{{ url_for('static', filename='crop1.jpg') }}" class="bg-image" alt="Background Image">
+    <h1 class="text-center" style="color: black;margin-top:2cm;">Empowering Agriculture with Smart Yield Predictions</h1>
+    <div class="container py-5">
+        
+        <div class="card bg-dark-light text-white border-0">
+            <div class="card-body">
+                <h2 class="text-center" style="color: white;">Know Your Yield Before You Seed!!</h2>
+                <form action="/predict" method="post">
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label for="Crop" class="form-label">Crop</label>
+            <input type="text" class="form-control form-control-dark" name="Crop" required>
+        </div>
+        <div class="col-md-6">
+            <label for="Crop_Year" class="form-label">Crop Year</label>
+            <input type="number" class="form-control form-control-dark" name="Crop_Year" required>
+        </div>
+        <div class="col-md-6">
+            <label for="Season" class="form-label">Season</label>
+            <input type="text" class="form-control form-control-dark" name="Season" required>
+        </div>
+        <div class="col-md-6">
+            <label for="State" class="form-label">State</label>
+            <input type="text" class="form-control form-control-dark" name="State" required>
+        </div>
+        <div class="col-md-6">
+            <label for="Area" class="form-label">Area</label>
+            <input type="number" class="form-control form-control-dark" name="Area" required>
+        </div>
+        <div class="col-md-6">
+            <label for="Annual_Rainfall" class="form-label">Annual Rainfall (mm)</label>
+            <input type="number" step="0.01" class="form-control form-control-dark" name="Annual_Rainfall" required>
+        </div>
+        <div class="col-md-6">
+            <label for="Fertilizer" class="form-label">Fertilizer</label>
+            <input type="number" step="0.01" class="form-control form-control-dark" name="Fertilizer" required>
+        </div>
+        <div class="col-md-6">
+            <label for="Pesticide" class="form-label">Pesticide</label>
+            <input type="number" step="0.01" class="form-control form-control-dark" name="Pesticide" required>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn-box w-100">Predict</button>
+        </div>
+    </div>
+</form>
+
+                
+                    <div class="text-center mt-4">
+                        <h2>Predicted Yield</h2>
+                        <h3 class="text-info">{{ prediction }}</h3>
+                    </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container my-5">
+    <div class="row text-center">
+
+      <div class="col-md-4 mb-4">
+        <div class="card bg-dark-light h-100 text-white shadow">
+          <div class="card-body">
+            <h4 class="card-title">🌱 Enter Crop Details</h4>
+            <p class="card-text">Fill in information such as crop type, season, area, and state. Make sure the values are accurate to get the best prediction.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="card bg-dark-light h-100 text-white shadow">
+          <div class="card-body">
+            <h4 class="card-title">💧 Add Environmental Inputs</h4>
+            <p class="card-text">Include rainfall, fertilizers, and pesticide usage. These parameters help the model calculate a more accurate yield.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="card bg-dark-light h-100 text-white shadow">
+          <div class="card-body">
+            <h4 class="card-title">📊 Get Yield Prediction</h4>
+            <p class="card-text">Click on Predict to see the estimated yield for your input. Use it to plan your agricultural activities better!</p>
+          </div>
+        </div>
+      </div>
+      <div class="container my-5">
+  <div class="row text-center">
+    <div class="col-md-6 mb-4">
+      <div class="card bg-dark text-white shadow-lg p-4" style="background-color: rgba(5, 73, 23, 0.9); border-radius: 15px;">
+        <div class="card-body">
+          <h4 class="card-title">🚜 Efficient Resource Planning</h4>
+          <p class="card-text">
+            Avoid overuse of fertilizers and water by planning precisely.  
+            Use predictive insights to allocate resources where needed most.  
+            Save costs and improve land sustainability.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mb-4">
+      <div class="card bg-dark text-white shadow-lg p-4" style="background-color: rgba(5, 73, 23, 0.9); border-radius: 15px;">
+        <div class="card-body">
+          <h4 class="card-title">📈 Boost Profitability</h4>
+          <p class="card-text">
+            Choose the best crop based on yield predictions and trends.  
+            Minimize losses by avoiding low-performing seasons or regions.  
+            Maximize returns with smart, data-backed decisions.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      <h1 class="text-center" style="color: black;margin-bottom:2cm;">Thank you!!</h1>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
+</html>
